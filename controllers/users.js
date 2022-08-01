@@ -93,6 +93,10 @@ const createUser = (req, res, next) => {
 //            Контроллер для выхода пользователя с сайта (signout)
 // ----------------------------------------------------------------------------
 
+const logOut = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'До свидания' });
+};
+
 // ----------------------------------------------------------------------------
 //             Контроллер для получения информации о пользователе
 // ----------------------------------------------------------------------------
@@ -101,7 +105,7 @@ const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь по указанному _id не найден');
+        throw new NotFoundError('Пользователь не найден');
       }
       res.status(200).send(user);
     })
@@ -135,4 +139,5 @@ module.exports = {
   login,
   getUserInfo,
   updateProfile,
+  logOut,
 };

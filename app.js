@@ -27,7 +27,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 // Задаем настройки для body-parser
+
+// для собирания JSON-формата
 app.use(bodyParser.json());
+
+// для приёма веб-страниц внутри POST-запроса
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Сообщаем, какой порт слушать

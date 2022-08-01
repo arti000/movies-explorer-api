@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 // Подключаем модуль для хэширования пароля
 const bcrypt = require('bcryptjs');
 
+// Импортируем валидатор в проект
+const validator = require('validator');
+
 // Импортируем класс ошибки
 const UnauthorizedError = require('../errors/unauthorized-err');
 
@@ -17,6 +20,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator(email) {
+        return validator.isEmail(email);
+      },
+      message: 'Неверно указан адрес электронной почты',
+    },
   },
   password: {
     type: String,

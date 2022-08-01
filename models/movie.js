@@ -75,6 +75,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       function(nameRU) {
+        // Не позволит пользователю добавить лишние символы в название фильма
         return /[a-яa-z0-9\-\s]/gi.test(nameRU);
       },
       message: 'Название содержит недопустимые для фильма',
@@ -85,6 +86,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       function(nameEN) {
+        // Не позволит пользователю добавить лишние символы в название фильма
         return /[a-z0-9\-\s]/gi.test(nameEN);
       },
       message: 'Неверно указана ссылка на трейлер фильма',

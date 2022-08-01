@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 // Подключаем модуль для хэширования пароля
 const bcrypt = require('bcryptjs');
 
+// Импортируем класс ошибки
+const UnauthorizedError = require('../errors/unauthorized-err');
+
 // Создаем схему пользователя
 const userSchema = new mongoose.Schema({
   email: {
@@ -34,14 +37,14 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(email,
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        // throw new UnauthorizedError('Неправильные почта или пароль');
+        throw new UnauthorizedError('Неправильные почта или пароль');
       }
       // Cравниваем переданный пароль и хеш из базы
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
             // хеши не совпали — отклоняем запрос
-            // throw new UnauthorizedError('Неправильные почта или пароль');
+            throw new UnauthorizedError('Неправильные почта или пароль');
           }
           return user; // теперь user доступен
         });

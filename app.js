@@ -13,6 +13,8 @@ const mongoose = require('mongoose');
 // Подключаем парсер для объединения пакетов
 const bodyParser = require('body-parser');
 
+// ======================= Задаем настройки приложения ========================
+
 // Задаем порт по умолчанию
 const { PORT = 3000 } = process.env;
 

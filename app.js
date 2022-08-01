@@ -22,7 +22,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 // Подключаем базу данных
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 

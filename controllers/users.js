@@ -16,16 +16,76 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 // Импортируем переменные окружения
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // Импортируем ошибки
+const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict-err');
+const UnauthorizedError = require('../errors/unauthorized-err');
 
 // ----------------------------------------------------------------------------
 //          Контроллер для регистрации пользователя на сайте (signup)
 // ----------------------------------------------------------------------------
 
+const createUser = (req, res, next) => {
+  const {
+    email,
+    password,
+    name,
+  } = req.body;
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      email,
+      password: hash,
+      name,
+    }))
+    // TO DO
+    .then((user) => res.status(200).send(
+      {
+        data: {
+          email,
+          name,
+        },
+      },
+    ))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+      }
+      if (err.code === 11000) {
+        return next(new ConflictError(`Пользователь с таким email ${req.body.email} уже существует`));
+      }
+      return next(err);
+    });
+};
+
 // ----------------------------------------------------------------------------
 //             Контроллер для входа пользователя на сайт (signin)
 // ----------------------------------------------------------------------------
+
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      // Создаем токен
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          sameSite: true,
+          httpOnly: true,
+        })
+        .send({ message: 'Авторизация прошла успешно' });
+    })
+    .catch((err) => {
+      // ошибка аутентификации
+      next(new UnauthorizedError('Неверные почта или пароль'));
+    });
+};
 
 // ----------------------------------------------------------------------------
 //            Контроллер для выхода пользователя с сайта (signout)
@@ -38,3 +98,9 @@ const User = require('../models/user');
 // ----------------------------------------------------------------------------
 //          Контроллер для обновления информации профиля пользователя
 // ----------------------------------------------------------------------------
+
+// ========================= Экспортируем контроллеры =========================
+module.exports = {
+  createUser,
+  login,
+};

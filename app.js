@@ -26,7 +26,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
-// ==================== Задаем настройки для body-parser ======================
+// Задаем настройки парсера
 
 // для собирания JSON-формата
 app.use(bodyParser.json());

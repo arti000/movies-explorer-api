@@ -41,6 +41,7 @@ const { createUser, logIn, logOut } = require('./controllers/users');
 const { validateLogIn, validateUser } = require('./middlewares/validation');
 
 // Импортируем мидлвэр логирования
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // ======================= Задаем настройки приложения ========================
 
@@ -70,6 +71,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // подключаем логгер запросов
+app.use(requestLogger);
 
 // ======================= Задаем настройки роутинга =========================
 
@@ -89,6 +91,7 @@ app.use('*', (req, res) => {
 });
 
 // Подключаем логгер ошибок
+app.use(errorLogger);
 
 // Обработчик ошибок celebrate
 app.use(errors());

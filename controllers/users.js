@@ -28,7 +28,7 @@ const NotFoundError = require('../errors/not-found-err');
 //             Контроллер для входа пользователя на сайт (signin)
 // ----------------------------------------------------------------------------
 
-const login = (req, res, next) => {
+const logIn = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -136,7 +136,7 @@ const updateProfile = (req, res, next) => {
 // ========================= Экспортируем контроллеры =========================
 module.exports = {
   createUser,
-  login,
+  logIn,
   getUserInfo,
   updateProfile,
   logOut,

@@ -1,9 +1,15 @@
+// ----------------------------------------------------------------------------
+//                      Миддлвэр кросс-доменных запросов (CORS)
+// ----------------------------------------------------------------------------
+
+// Список разрешенных доменов
 const allowedCors = [
 ];
 
 const cors = (req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   const { method } = req;
+
   // сохраняем список заголовков исходного запроса
   const requestHeaders = req.headers['access-control-request-headers'];
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTION';
@@ -26,4 +32,5 @@ const cors = (req, res, next) => {
   return next();
 };
 
-module.exports = cors;
+// Экспортируем миддлвэр
+export default cors;

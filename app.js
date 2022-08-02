@@ -19,7 +19,8 @@ const bodyParser = require('body-parser');
 // Подключаем парсер для данных из кук
 const cookieParser = require('cookie-parser');
 
-//
+// Подключаем роуты пользователя
+const userRoutes = require('./routes/users');
 
 // ======================= Задаем настройки приложения ========================
 
@@ -44,6 +45,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // для парсинга кук
 app.use(cookieParser());
+
+// Роуты
+
+// Роуты, не требующие авторизации
+
+// Мидлвэр авторизации
+
+// Роуты, которым нужна авторизация
+app.use('/users', userRoutes);
 
 // Сообщаем, какой порт слушать
 app.listen(PORT, () => {

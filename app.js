@@ -24,7 +24,9 @@ const { errors } = require('celebrate');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
-// Импортируем мидлвэры
+// Импортируем мидлвэр CORS
+
+// Импортируем мидлвэр авторизации
 
 // Подключаем роуты
 const userRoutes = require('./routes/users');
@@ -33,8 +35,10 @@ const moviesRoutes = require('./routes/movies');
 // Импортируем контроллеры для регистрации, входа и выхода пользователя на сайте
 const { createUser, logIn, logOut } = require('./controllers/users');
 
-// Импортируем функции валидации
+// Импортируем мидлвэр валидации
 const { validateLogIn, validateUser } = require('./middlewares/validation');
+
+// Импортируем мидлвэр логирования
 
 // ======================= Задаем настройки приложения ========================
 
@@ -61,6 +65,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // для парсинга данных из кук
 app.use(cookieParser());
+
+// подключаем логгер запросов
 
 // ======================= Задаем настройки роутинга =========================
 

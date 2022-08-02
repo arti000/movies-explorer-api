@@ -25,6 +25,7 @@ const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
 // Импортируем мидлвэр CORS
+const cors = require('./middlewares/cors');
 
 // Импортируем мидлвэр авторизации
 const auth = require('./middlewares/auth');
@@ -55,6 +56,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 // Подключаем мидлвэр CORS
+app.use(cors);
 
 // ======================= Задаем настройки парсеров =========================
 

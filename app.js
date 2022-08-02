@@ -27,6 +27,7 @@ const ServerError = require('./errors/server-err');
 // Импортируем мидлвэр CORS
 
 // Импортируем мидлвэр авторизации
+const auth = require('./middlewares/auth');
 
 // Подключаем роуты
 const userRoutes = require('./routes/users');
@@ -75,6 +76,7 @@ app.post('/signin', validateLogIn, logIn);
 app.post('/signup', validateUser, createUser);
 
 // Мидлвэр авторизации
+app.use(auth);
 
 // Роуты, которым нужна авторизация
 app.use('/users', userRoutes);

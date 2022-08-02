@@ -57,7 +57,7 @@ const movieSchema = new mongoose.Schema({
       validator(thumbnail) {
         return validator.isURL(thumbnail);
       },
-      message: 'Неверно указана ссылка на трейлер фильма',
+      message: 'Неверно указана ссылка на миниатюрное изображение постера к фильму',
     },
   },
   owner: {

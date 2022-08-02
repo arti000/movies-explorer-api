@@ -26,4 +26,5 @@ userRoutes.get('/me', getUserInfo);
 // Роут, который обновляет информацию о пользователе (email и имя)
 userRoutes.patch('/me', validateUpdateProfile, updateProfile);
 
+// Экспортируем роуты
 module.exports = userRoutes;

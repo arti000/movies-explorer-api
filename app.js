@@ -24,8 +24,11 @@ const { errors } = require('celebrate');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
+// Импортируем мидлвэры
+
 // Подключаем роуты
 const userRoutes = require('./routes/users');
+const moviesRoutes = require('./routes/movies');
 
 // Импортируем контроллеры для регистрации, входа и выхода пользователя на сайте
 const { createUser, logIn, logOut } = require('./controllers/users');
@@ -45,6 +48,8 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
+
+// Подключаем мидлвэр CORS
 
 // ======================= Задаем настройки парсеров =========================
 
@@ -67,10 +72,13 @@ app.post('/signup', validateUser, createUser);
 
 // Роуты, которым нужна авторизация
 app.use('/users', userRoutes);
+app.use('/movies', moviesRoutes);
 app.get('/signout', logOut);
 app.use('*', (req, res) => {
   throw new NotFoundError('Страница не найдена');
 });
+
+// Подключаем логгер ошибок
 
 // Обработчик ошибок celebrate
 app.use(errors());

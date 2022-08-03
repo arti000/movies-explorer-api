@@ -25,7 +25,7 @@ const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
 // Импортируем мидлвэр CORS
-const cors = require('./middlewares/cors').default;
+const cors = require('./middlewares/cors');
 
 // Импортируем мидлвэр авторизации
 const auth = require('./middlewares/auth');

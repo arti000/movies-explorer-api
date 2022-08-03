@@ -33,4 +33,4 @@ const cors = (req, res, next) => {
 };
 
 // Экспортируем миддлвэр
-export default cors;
+module.exports = cors;

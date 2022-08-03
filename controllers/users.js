@@ -69,7 +69,6 @@ const createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    // TO DO
     .then((user) => res.status(200).send(
       {
         data: {
@@ -119,8 +118,8 @@ const getUserInfo = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const updateProfile = (req, res, next) => {
-  const { name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name }, {
+  const { email, name } = req.body;
+  User.findByIdAndUpdate(req.user._id, { email, name }, {
     new: true,
     runValidators: true,
   })

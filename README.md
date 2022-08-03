@@ -40,3 +40,4 @@ DELETE /movies/:movieId — удаляет сохранённый фильм п�
 
 ###
 [![Link to repository](https://img.shields.io/badge/-Репозиторий%20с%20бэкендом%20Movies%20Arti000%20-black?logo=GitHub)](https://github.com/arti000)
+[![Link to SSL Report](https://img.shields.io/badge/-Проверка%20действительности%20SSL-сертификата-red?logo=Qualys)](https://www.ssllabs.com/ssltest/analyze.html?d=diploma.app.nomoredomains.sbs)

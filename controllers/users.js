@@ -119,9 +119,9 @@ const updateProfile = (req, res, next) => {
     .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
+        return next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
       }
-      next(err);
+      return next(err);
     });
 };
 

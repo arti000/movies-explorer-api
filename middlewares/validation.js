@@ -35,7 +35,7 @@ const validateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30).required(),
   }),
 });
 
@@ -50,10 +50,10 @@ const validateUpdateProfile = celebrate({
 // Валидатор для добавления фильма
 const validateMovie = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().min(3).max(85),
-    director: Joi.string().min(2).max(30),
+    country: Joi.string().min(3).max(85).required(),
+    director: Joi.string().min(2).max(30).required(),
     duration: Joi.number().required(),
-    year: Joi.string().length(4),
+    year: Joi.string().length(4).required(),
     description: Joi.string().required(),
     image: Joi.string().required().custom(validateUrl),
     trailerLink: Joi.string().required().custom(validateUrl),

@@ -21,24 +21,13 @@ const cookieParser = require('cookie-parser');
 
 // Подключаем ошибки
 const { errors } = require('celebrate');
-const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
 // Импортируем мидлвэр CORS
 const cors = require('./middlewares/cors');
 
-// Импортируем мидлвэр авторизации
-const auth = require('./middlewares/auth');
-
 // Подключаем роуты
-const userRoutes = require('./routes/users');
-const moviesRoutes = require('./routes/movies');
-
-// Импортируем контроллеры для регистрации, входа и выхода пользователя на сайте
-const { createUser, logIn, logOut } = require('./controllers/users');
-
-// Импортируем мидлвэр валидации
-const { validateLogIn, validateUser } = require('./middlewares/validation');
+const router = require('./routes/index');
 
 // Импортируем мидлвэр логирования
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -76,22 +65,8 @@ app.use(cookieParser());
 // подключаем логгер запросов
 app.use(requestLogger);
 
-// ======================= Задаем настройки роутинга =========================
-
-// Роуты, не требующие авторизации
-app.post('/signin', validateLogIn, logIn);
-app.post('/signup', validateUser, createUser);
-
-// Мидлвэр авторизации
-app.use(auth);
-
-// Роуты, которым нужна авторизация
-app.use('/users', userRoutes);
-app.use('/movies', moviesRoutes);
-app.get('/signout', logOut);
-app.use('*', () => {
-  throw new NotFoundError('Страница не найдена');
-});
+// Роутинг
+app.use('/', router);
 
 // Подключаем логгер ошибок
 app.use(errorLogger);

@@ -58,15 +58,16 @@ const validateMovie = celebrate({
     image: Joi.string().required().custom(validateUrl),
     trailerLink: Joi.string().required().custom(validateUrl),
     thumbnail: Joi.string().required().custom(validateUrl),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
 });
 
-// Валидатор для проверки id фильма
-const validateMovieId = celebrate({
+// Валидатор для проверки id пользователя
+const validationId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex().required(),
+    _id: Joi.string().length(24).hex(),
   }),
 });
 
@@ -75,5 +76,5 @@ module.exports = {
   validateUser,
   validateUpdateProfile,
   validateMovie,
-  validateMovieId,
+  validationId,
 };

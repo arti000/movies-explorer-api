@@ -46,15 +46,18 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 // ======================= Задаем настройки приложения ========================
 
 // Задаем порт по умолчанию
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_DB } = process.env;
 
 // Запускаем приложение
 const app = express();
 
 // Подключаем базу данных
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  NODE_ENV === 'production' ? MONGO_DB : 'mongodb://localhost:27017/moviesdb',
+  {
+    useNewUrlParser: true,
+  },
+);
 
 // Подключаем мидлвэр CORS
 app.use(cors);

@@ -76,12 +76,12 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Передан несуществующий _id фильма');
+      } else if (!movie.owner.equals(req.user._id)) {
+        throw new ForbiddenError('Чужие фильмы удалять запрещено');
+      } else {
+        return movie.remove()
+          .then(() => res.send({ message: 'Фильм удален' }));
       }
-      if (!movie.owner.equals(req.user._id)) {
-        return next(new ForbiddenError('Чужие фильмы удалять запрещено'));
-      }
-      return movie.remove()
-        .then(() => res.send({ message: 'Фильм удален' }));
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {

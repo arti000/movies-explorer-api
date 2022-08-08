@@ -86,7 +86,7 @@ app.use(auth);
 app.use('/users', userRoutes);
 app.use('/movies', moviesRoutes);
 app.get('/signout', logOut);
-app.use('*', (req, res) => {
+app.use('*', () => {
   throw new NotFoundError('Страница не найдена');
 });
 
@@ -98,6 +98,4 @@ app.use(errors());
 app.use(ServerError);
 
 // Сообщаем, какой порт слушать
-app.listen(PORT, () => {
-  console.log(`Listening ${PORT}`);
-});
+app.listen(PORT);

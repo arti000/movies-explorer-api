@@ -47,7 +47,7 @@ const logIn = (req, res, next) => {
         })
         .send({ message: 'Авторизация прошла успешно', token });
     })
-    .catch((err) => {
+    .catch(() => {
       // ошибка аутентификации
       next(new UnauthorizedError('Неверные почта или пароль'));
     });
@@ -69,14 +69,7 @@ const createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    .then((user) => res.status(200).send(
-      {
-        data: {
-          email,
-          name,
-        },
-      },
-    ))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));

@@ -80,11 +80,12 @@ const createMovie = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params._id)
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError(MOVIE_NOT_FOUND));
-      } if (!movie.owner.equals(req.user._id)) {
+      }
+      if (!movie.owner.equals(req.user._id)) {
         return next(new ForbiddenError(FORBIDDEN_TO_DELETE));
       }
       return movie.remove()

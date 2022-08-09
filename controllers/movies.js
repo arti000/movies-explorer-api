@@ -80,7 +80,7 @@ const createMovie = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError(MOVIE_NOT_FOUND));

@@ -29,7 +29,7 @@ moviesRoutes.get('/', getMovies);
 moviesRoutes.post('/', validateMovie, createMovie);
 
 // Роут, который удаляет сохраненный фильм по id
-moviesRoutes.delete('/:movieId', validationId, deleteMovie);
+moviesRoutes.delete('/:_id', validationId, deleteMovie);
 
 // Экспортируем роуты
 module.exports = moviesRoutes;

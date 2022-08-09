@@ -40,7 +40,7 @@ DELETE /movies/:movieId — удаляет сохранённый фильм п�
 
 ###
 [![Link to repository](https://img.shields.io/badge/-Репозиторий%20с%20бэкендом%20Movies%20Arti000%20-black?logo=GitHub)](https://github.com/arti000)
-[![Link to SSL Report](https://img.shields.io/badge/-Проверка%20SSL%20сертификата%20-ed2e26?logo=Qualys)](https://www.ssllabs.com/ssltest/analyze.html?d=diploma.app.nomoredomains.sbs)
+[![Link to SSL Report](https://img.shields.io/badge/-Проверка%20SSL%20сертификата%20-ed2e26?logo=Qualys)](https://www.ssllabs.com/ssltest/analyze.html?d=api.diploma.app.nomoredomains.sbs)
 
 Публичный IPv4: 62.84.116.80  
-Домен: https://diploma.app.nomoredomains.sbs/
+Домен: https://api.diploma.app.nomoredomains.sbs/

@@ -19,6 +19,9 @@ const bodyParser = require('body-parser');
 // Подключаем парсер для данных из кук
 const cookieParser = require('cookie-parser');
 
+// Подключаем ограничитель запросов
+const reqLimiter = require('./middlewares/rate-limiter');
+
 // Подключаем ошибки
 const { errors } = require('celebrate');
 const ServerError = require('./errors/server-err');
@@ -51,8 +54,6 @@ mongoose.connect(
 // Подключаем мидлвэр CORS
 app.use(cors);
 
-// ======================= Задаем настройки парсеров =========================
-
 // для собирания JSON-формата
 app.use(bodyParser.json());
 
@@ -64,6 +65,9 @@ app.use(cookieParser());
 
 // подключаем логгер запросов
 app.use(requestLogger);
+
+// подключаем ограничитель запросов
+app.use(reqLimiter);
 
 // Роутинг
 app.use('/', router);

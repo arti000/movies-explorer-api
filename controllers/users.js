@@ -23,6 +23,15 @@ const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
 
+// Импортируем текст сообщений
+const {
+  AUTHORIZATION_SUCCESSFUL,
+  USER_DATA_INCORRECT,
+  EMAIL_CONFLICT,
+  TOKEN_DELETED,
+  USER_NOT_FOUND,
+} = require('../utils/constants');
+
 // ----------------------------------------------------------------------------
 //             Контроллер для входа пользователя на сайт (signin)
 // ----------------------------------------------------------------------------
@@ -44,7 +53,7 @@ const logIn = (req, res, next) => {
           sameSite: true,
           httpOnly: true,
         })
-        .send({ message: 'Авторизация прошла успешно', token });
+        .send({ message: AUTHORIZATION_SUCCESSFUL, token });
     })
     .catch((err) => {
       // ошибка аутентификации
@@ -71,10 +80,10 @@ const createUser = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        return next(new BadRequestError(USER_DATA_INCORRECT));
       }
       if (err.code === 11000) {
-        return next(new ConflictError(`Пользователь с таким email ${req.body.email} уже существует`));
+        return next(new ConflictError(EMAIL_CONFLICT));
       }
       return next(err);
     });
@@ -85,7 +94,7 @@ const createUser = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const logOut = (req, res) => {
-  res.clearCookie('jwt').send({ message: 'До свидания' });
+  res.clearCookie('jwt').send({ message: TOKEN_DELETED });
 };
 
 // ----------------------------------------------------------------------------
@@ -96,7 +105,7 @@ const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь не найден');
+        throw new NotFoundError(USER_NOT_FOUND);
       }
       res.status(200).send(user);
     })
@@ -118,7 +127,7 @@ const updateProfile = (req, res, next) => {
     .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
+        return next(new BadRequestError(USER_DATA_INCORRECT));
       }
       return next(err);
     });

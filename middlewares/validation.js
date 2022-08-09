@@ -14,10 +14,13 @@ const {
 // Подключаем валидатор
 const validator = require('validator');
 
+// Импортируем текст сообщений
+const { URL_INCORRECT } = require('../utils/constants');
+
 // Валидатор ссылок
 const validateUrl = (v) => {
   if (!validator.isURL(v)) {
-    throw new CelebrateError('Неверный формат ссылки');
+    throw new CelebrateError(URL_INCORRECT);
   }
   return v;
 };

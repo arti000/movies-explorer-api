@@ -13,6 +13,9 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 // Импортируем переменные окружения
 const { NODE_ENV, JWT_SECRET } = process.env;
 
+// Импортируем текст сообщений
+const AUTHORIZATION_REQUIRED = require('../utils/constants');
+
 // ----------------------------------------------------------------------------
 //                            Экспортируем миддлвэр
 // ----------------------------------------------------------------------------
@@ -20,7 +23,7 @@ module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new UnauthorizedError('Необходима авторизация'));
+    next(new UnauthorizedError(AUTHORIZATION_REQUIRED));
     return;
   }
 
@@ -33,7 +36,7 @@ module.exports = (req, res, next) => {
     );
   } catch (err) {
     res.clearCookie('jwt');
-    throw new UnauthorizedError('Необходима авторизация');
+    throw new UnauthorizedError(AUTHORIZATION_REQUIRED);
   }
 
   req.user = payload;

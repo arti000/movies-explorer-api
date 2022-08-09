@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 // Импортируем валидатор в проект
 const validator = require('validator');
 
+// Импортируем текст сообщений
+const { POSTER_URL_INCORRECT, TRAILER_URL_INCORRECT, THUMBNAIL_LINK_INCORRECT } = require('../utils/constants');
+
 // Создаем схему фильма
 const movieSchema = new mongoose.Schema({
   country: {
@@ -37,7 +40,7 @@ const movieSchema = new mongoose.Schema({
       validator(image) {
         return validator.isURL(image);
       },
-      message: 'Неверно указана ссылка на постер к фильму',
+      message: POSTER_URL_INCORRECT,
     },
   },
   trailerLink: {
@@ -47,7 +50,7 @@ const movieSchema = new mongoose.Schema({
       validator(trailerLink) {
         return validator.isURL(trailerLink);
       },
-      message: 'Неверно указана ссылка на трейлер фильма',
+      message: TRAILER_URL_INCORRECT,
     },
   },
   thumbnail: {
@@ -57,7 +60,7 @@ const movieSchema = new mongoose.Schema({
       validator(thumbnail) {
         return validator.isURL(thumbnail);
       },
-      message: 'Неверно указана ссылка на миниатюрное изображение постера к фильму',
+      message: THUMBNAIL_LINK_INCORRECT,
     },
   },
   owner: {

@@ -25,6 +25,9 @@ const NotFoundError = require('../errors/not-found-err');
 // Импортируем мидлвэр валидации
 const { validateLogIn, validateUser } = require('../middlewares/validation');
 
+// Импортируем текст сообщений
+const { PAGE_NOT_FOUND } = require('../utils/constants');
+
 // ======================= Задаем настройки роутинга =========================
 
 // Роуты, не требующие авторизации
@@ -39,7 +42,7 @@ router.use('/users', userRoutes);
 router.use('/movies', moviesRoutes);
 router.get('/signout', logOut);
 router.use('*', () => {
-  throw new NotFoundError('Страница не найдена');
+  throw new NotFoundError(PAGE_NOT_FOUND);
 });
 
 module.exports = router;

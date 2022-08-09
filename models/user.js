@@ -16,6 +16,9 @@ const validator = require('validator');
 // Импортируем класс ошибки
 const UnauthorizedError = require('../errors/unauthorized-err');
 
+// Импортируем текст сообщений
+const { EMAIL_INCORRECT, EMAIL_OR_PASSWORD_INVALID } = require('../utils/constants');
+
 // ----------------------------------------------------------------------------
 //                          Создаем схему пользователя
 // ----------------------------------------------------------------------------
@@ -25,7 +28,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    validate: [validator.isEmail, 'Неверно указан адрес электронной почты'],
+    validate: [validator.isEmail, EMAIL_INCORRECT],
   },
   password: {
     type: String,
@@ -46,14 +49,14 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(email,
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthorizedError('Неправильные почта или пароль');
+        throw new UnauthorizedError(EMAIL_OR_PASSWORD_INVALID);
       }
       // Cравниваем переданный пароль и хеш из базы
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
             // хеши не совпали — отклоняем запрос
-            throw new UnauthorizedError('Неправильные почта или пароль');
+            throw new UnauthorizedError(EMAIL_OR_PASSWORD_INVALID);
           }
           return user; // теперь user доступен
         });

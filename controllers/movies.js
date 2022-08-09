@@ -14,6 +14,14 @@ const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
+// Импортируем текст сообщений
+const {
+  MOVIE_DATA_INCORRECT,
+  MOVIE_NOT_FOUND,
+  FORBIDDEN_TO_DELETE,
+  MOVIE_DELETED,
+} = require('../utils/constants');
+
 // ----------------------------------------------------------------------------
 //  Контроллер, который возвращает все сохраненные текущим пользователем фильмы
 // ----------------------------------------------------------------------------
@@ -61,7 +69,7 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при добавлении фильма'));
+        return next(new BadRequestError(MOVIE_DATA_INCORRECT));
       }
       return next(err);
     });
@@ -72,23 +80,18 @@ const createMovie = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Передан несуществующий _id фильма');
+        throw new NotFoundError(MOVIE_NOT_FOUND);
       } else if (!movie.owner.equals(req.user._id)) {
-        throw new ForbiddenError('Чужие фильмы удалять запрещено');
+        throw new ForbiddenError(FORBIDDEN_TO_DELETE);
       } else {
         return movie.remove()
-          .then(() => res.send({ message: 'Фильм удален' }));
+          .then(() => res.send({ message: MOVIE_DELETED }));
       }
     })
-    .catch((err) => {
-      if (err.kind === 'ObjectId') {
-        return next(new BadRequestError('Переданы некорректные данные для удаления фильма'));
-      }
-      return next(err);
-    });
+    .catch(next);
 };
 
 // ========================= Экспортируем контроллеры =========================

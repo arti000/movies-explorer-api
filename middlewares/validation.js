@@ -67,10 +67,10 @@ const validateMovie = celebrate({
   }),
 });
 
-// Валидатор для проверки id пользователя
+// Валидатор для проверки id
 const validationId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().length(24).hex(),
+    _id: Joi.string().required().hex().length(24),
   }),
 });
 

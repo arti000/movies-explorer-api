@@ -17,6 +17,7 @@ const {
 // Импортируем функции валидации
 const {
   validateMovie,
+  validationId,
 } = require('../middlewares/validation');
 
 // ====================== Создаем роуты для пользователя ======================
@@ -28,7 +29,7 @@ moviesRoutes.get('/', getMovies);
 moviesRoutes.post('/', validateMovie, createMovie);
 
 // Роут, который удаляет сохраненный фильм по id
-moviesRoutes.delete('/:movieId', deleteMovie);
+moviesRoutes.delete('/:movieId', validationId, deleteMovie);
 
 // Экспортируем роуты
 module.exports = moviesRoutes;

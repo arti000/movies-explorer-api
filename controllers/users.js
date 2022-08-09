@@ -80,10 +80,10 @@ const createUser = (req, res, next) => {
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError({ message: USER_DATA_INCORRECT }));
+        return next(new BadRequestError(USER_DATA_INCORRECT));
       }
       if (err.code === 11000) {
-        return next(new ConflictError({ message: EMAIL_CONFLICT }));
+        return next(new ConflictError(EMAIL_CONFLICT));
       }
       return next(err);
     });
@@ -105,7 +105,7 @@ const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError({ message: USER_NOT_FOUND });
+        throw new NotFoundError(USER_NOT_FOUND);
       }
       res.status(200).send(user);
     })
@@ -127,7 +127,7 @@ const updateProfile = (req, res, next) => {
     .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError({ message: USER_DATA_INCORRECT }));
+        return next(new BadRequestError(USER_DATA_INCORRECT));
       }
       return next(err);
     });

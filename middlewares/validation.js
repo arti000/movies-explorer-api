@@ -20,7 +20,7 @@ const { URL_INCORRECT } = require('../utils/constants');
 // Валидатор ссылок
 const validateUrl = (v) => {
   if (!validator.isURL(v)) {
-    throw new CelebrateError({ message: URL_INCORRECT });
+    return new CelebrateError(URL_INCORRECT);
   }
   return v;
 };

@@ -69,7 +69,7 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError({ message: MOVIE_DATA_INCORRECT }));
+        return next(new BadRequestError(MOVIE_DATA_INCORRECT));
       }
       return next(err);
     });
@@ -83,13 +83,12 @@ const deleteMovie = (req, res, next) => {
   Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError({ message: MOVIE_NOT_FOUND });
-      } else if (!movie.owner.equals(req.user._id)) {
-        throw new ForbiddenError({ message: FORBIDDEN_TO_DELETE });
-      } else {
-        return movie.remove()
-          .then(() => res.send({ message: MOVIE_DELETED }));
+        return next(new NotFoundError(MOVIE_NOT_FOUND));
+      } if (!movie.owner.equals(req.user._id)) {
+        return next(new ForbiddenError(FORBIDDEN_TO_DELETE));
       }
+      return movie.remove()
+        .then(() => res.send(MOVIE_DELETED));
     })
     .catch(next);
 };

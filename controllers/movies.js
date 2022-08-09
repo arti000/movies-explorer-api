@@ -89,7 +89,7 @@ const deleteMovie = (req, res, next) => {
         return next(new ForbiddenError(FORBIDDEN_TO_DELETE));
       }
       return movie.remove()
-        .then(() => res.send(MOVIE_DELETED));
+        .then(() => res.send({ message: MOVIE_DELETED }));
     })
     .catch(next);
 };

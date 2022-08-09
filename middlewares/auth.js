@@ -14,7 +14,7 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 // Импортируем текст сообщений
-const AUTHORIZATION_REQUIRED = require('../utils/constants');
+const { AUTHORIZATION_REQUIRED } = require('../utils/constants');
 
 // ----------------------------------------------------------------------------
 //                            Экспортируем миддлвэр

@@ -13,17 +13,16 @@ const express = require('express');
 // Подключаем ODM - Mongoose
 const mongoose = require('mongoose');
 
-// Подключаем парсер для объединения пакетов
-const bodyParser = require('body-parser');
-
 // Подключаем парсер для данных из кук
 const cookieParser = require('cookie-parser');
+
+// Подключаем обработчик ошибок celebrate
+const { errors } = require('celebrate');
 
 // Подключаем ограничитель запросов
 const reqLimiter = require('./middlewares/rate-limiter');
 
 // Подключаем ошибки
-const { errors } = require('celebrate');
 const ServerError = require('./errors/server-err');
 
 // Импортируем мидлвэр CORS
@@ -55,10 +54,10 @@ mongoose.connect(
 app.use(cors);
 
 // для собирания JSON-формата
-app.use(bodyParser.json());
+app.use(express.json());
 
 // для приёма веб-страниц внутри POST-запроса
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // для парсинга данных из кук
 app.use(cookieParser());

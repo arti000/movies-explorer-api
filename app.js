@@ -19,6 +19,9 @@ const cookieParser = require('cookie-parser');
 // Подключаем обработчик ошибок celebrate
 const { errors } = require('celebrate');
 
+// Импортируем модуль helmet
+const helmet = require('helmet');
+
 // Подключаем ограничитель запросов
 const reqLimiter = require('./middlewares/rate-limiter');
 
@@ -46,6 +49,9 @@ const app = express();
 mongoose.connect(MONGO_DB, {
   useNewUrlParser: true,
 });
+
+// Подключаем модуль helmet
+app.use(helmet());
 
 // Подключаем мидлвэр CORS
 app.use(cors);

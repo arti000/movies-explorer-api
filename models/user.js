@@ -49,14 +49,14 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(email,
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthorizedError(EMAIL_OR_PASSWORD_INVALID);
+        throw new UnauthorizedError({ message: EMAIL_OR_PASSWORD_INVALID });
       }
       // Cравниваем переданный пароль и хеш из базы
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
             // хеши не совпали — отклоняем запрос
-            throw new UnauthorizedError(EMAIL_OR_PASSWORD_INVALID);
+            throw new UnauthorizedError({ message: EMAIL_OR_PASSWORD_INVALID });
           }
           return user; // теперь user доступен
         });

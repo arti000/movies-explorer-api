@@ -42,7 +42,7 @@ router.use('/users', userRoutes);
 router.use('/movies', moviesRoutes);
 router.get('/signout', logOut);
 router.use('*', () => {
-  throw new NotFoundError(PAGE_NOT_FOUND);
+  throw new NotFoundError({ message: PAGE_NOT_FOUND });
 });
 
 module.exports = router;

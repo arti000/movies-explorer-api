@@ -23,8 +23,7 @@ module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new UnauthorizedError(AUTHORIZATION_REQUIRED));
-    return;
+    throw new UnauthorizedError({ message: AUTHORIZATION_REQUIRED });
   }
 
   let payload;
@@ -36,7 +35,7 @@ module.exports = (req, res, next) => {
     );
   } catch (err) {
     res.clearCookie('jwt');
-    throw new UnauthorizedError(AUTHORIZATION_REQUIRED);
+    throw new UnauthorizedError({ message: AUTHORIZATION_REQUIRED });
   }
 
   req.user = payload;

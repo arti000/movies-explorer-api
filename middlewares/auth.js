@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/unauthorized-err');
 
 // Импортируем переменные окружения
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = require('../config');
 
 // Импортируем текст сообщений
 const { AUTHORIZATION_REQUIRED } = require('../utils/constants');

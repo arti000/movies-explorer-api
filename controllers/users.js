@@ -30,6 +30,7 @@ const {
   EMAIL_CONFLICT,
   TOKEN_DELETED,
   USER_NOT_FOUND,
+  SIGN_UP_SUCCESSFUL,
 } = require('../utils/constants');
 
 // ----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ const createUser = (req, res, next) => {
       password: hash,
       name,
     }))
-    .then((user) => res.status(200).send(user))
+    .then(() => res.status(200).send({ message: SIGN_UP_SUCCESSFUL }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError(USER_DATA_INCORRECT));

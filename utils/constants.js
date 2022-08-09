@@ -20,6 +20,7 @@ const USER_DATA_INCORRECT = 'Переданы некорректные данн�
 const EMAIL_CONFLICT = 'Пользователь с таким email уже существует';
 const TOKEN_DELETED = 'Токен удален';
 const USER_NOT_FOUND = 'Пользователь не найден';
+const SIGN_UP_SUCCESSFUL = 'Вы успешно зарегистрировались';
 
 module.exports = {
   MOVIE_DATA_INCORRECT,
@@ -40,4 +41,5 @@ module.exports = {
   EMAIL_OR_PASSWORD_INVALID,
   PAGE_NOT_FOUND,
   SERVER_ERROR,
+  SIGN_UP_SUCCESSFUL,
 };

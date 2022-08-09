@@ -129,6 +129,9 @@ const updateProfile = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError(USER_DATA_INCORRECT));
       }
+      if (err.code === 11000) {
+        return next(new ConflictError(EMAIL_CONFLICT));
+      }
       return next(err);
     });
 };

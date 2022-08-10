@@ -16,13 +16,12 @@ const {
 // Импортируем функции валидации
 const {
   validateUpdateProfile,
-  validationId,
 } = require('../middlewares/validation');
 
 // ====================== Создаем роуты для пользователя ======================
 
 // Роут, который возвращает информацию о пользователе
-userRoutes.get('/me', validationId, getUserInfo);
+userRoutes.get('/me', getUserInfo);
 
 // Роут, который обновляет информацию о пользователе
 userRoutes.patch('/me', validateUpdateProfile, updateProfile);

@@ -53,17 +53,17 @@ const validateUpdateProfile = celebrate({
 // Валидатор для добавления фильма
 const validateMovie = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(1).max(100),
-    director: Joi.string().required().min(1).max(100),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.string().required().max(4),
-    description: Joi.string().required().min(2).max(1000),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
     image: Joi.string().required().custom(validateUrl),
     trailerLink: Joi.string().required().custom(validateUrl),
     thumbnail: Joi.string().required().custom(validateUrl),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().min(1).max(100),
-    nameEN: Joi.string().required().min(1).max(100),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 

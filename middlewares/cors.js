@@ -4,6 +4,12 @@
 
 // Список разрешенных доменов
 const allowedCors = [
+  'http://diploma.app.nomoredomains.sbs',
+  'http://api.diploma.app.nomoredomains.sbs',
+  'https://diploma.app.nomoredomains.sbs',
+  'https://api.diploma.app.nomoredomains.sbs',
+  'http://localhost:3000',
+  'https://localhost:3000',
 ];
 
 const cors = (req, res, next) => {

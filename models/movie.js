@@ -15,12 +15,10 @@ const { POSTER_URL_INCORRECT, TRAILER_URL_INCORRECT, THUMBNAIL_LINK_INCORRECT } 
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    minLength: 1,
     maxLength: 100,
   },
   director: {
     type: String,
-    minLength: 1,
     maxLength: 100,
   },
   duration: {
@@ -33,7 +31,6 @@ const movieSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    minLength: 2,
     maxLength: 1000,
   },
   image: {
@@ -77,12 +74,10 @@ const movieSchema = new mongoose.Schema({
   },
   nameRU: {
     type: String,
-    minLength: 1,
     maxLength: 100,
   },
   nameEN: {
     type: String,
-    minLength: 1,
     maxLength: 100,
   },
 });

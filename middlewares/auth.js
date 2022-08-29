@@ -31,7 +31,10 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    res.clearCookie('jwt');
+    res.clearCookie('jwt', {
+      sameSite: 'none',
+      secure: true,
+    });
     throw new UnauthorizedError(AUTHORIZATION_REQUIRED);
   }
 

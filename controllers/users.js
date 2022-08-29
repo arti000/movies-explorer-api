@@ -96,7 +96,11 @@ const createUser = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const logOut = (req, res) => {
-  res.clearCookie('jwt', { sameSite: 'none' }).send({ message: TOKEN_DELETED });
+  res.clearCookie('jwt', {
+    sameSite: 'none',
+    secure: true,
+  })
+    .send({ message: TOKEN_DELETED });
 };
 
 // ----------------------------------------------------------------------------

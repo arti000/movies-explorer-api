@@ -51,8 +51,9 @@ const logIn = (req, res, next) => {
       // Отправляем токен в куку
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
-          sameSite: true,
+          sameSite: 'none',
           httpOnly: true,
+          secure: true,
         })
         .send({ message: AUTHORIZATION_SUCCESSFUL, token });
     })

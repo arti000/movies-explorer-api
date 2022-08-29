@@ -55,7 +55,7 @@ const logIn = (req, res, next) => {
           httpOnly: true,
           secure: true,
         })
-        .send({ message: AUTHORIZATION_SUCCESSFUL, token });
+        .send({ message: AUTHORIZATION_SUCCESSFUL });
     })
     .catch((err) => {
       // ошибка аутентификации
@@ -96,7 +96,7 @@ const createUser = (req, res, next) => {
 // ----------------------------------------------------------------------------
 
 const logOut = (req, res) => {
-  res.clearCookie('jwt').send({ message: TOKEN_DELETED });
+  res.clearCookie('jwt', { sameSite: 'none' }).send({ message: TOKEN_DELETED });
 };
 
 // ----------------------------------------------------------------------------
